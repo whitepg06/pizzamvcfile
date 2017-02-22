@@ -10,28 +10,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>John's JSP Pizza Order</title>
+        <title>John's Online Pizza Store</title>
         <link rel="stylesheet" href="mystyle.css">
     </head>
     <body>
-        <h1>Thank you for your order!</h1>
-        <h2>Order details:</h2>
+        <h1><a href="home.html">John's Online Pizza Store</a></h1>
+        <h2>Order Success! Thank you for your order!</h2>
+        <h3>Order details:</h3>
         <p>Email = ${myOrder.email}</p>
         <p>Size = ${myOrder.size}</p>
-        <p>Toppings: 
-            <%
-                // Checkboxes from a form may or may not be checked. We can use the
-                // following code to get an array of the values that are checked.
-                PizzaOrder po = (PizzaOrder) request.getAttribute("myOrder");
-                if (po.getToppings() != null && po.getToppings().length != 0) {
-                    for (String myTopping : po.getToppings()) {
-                        out.println(myTopping + ", ");
-                    }
-                } else {
-                    out.println(" no toppings were requested");
-                }
-            %>
-        </p>
+        <p>Toppings: ${myOrder.toppings}</p>
         <p><a href='home.html'>Return to home page</a></p>
     </body>
 </html>

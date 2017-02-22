@@ -2,6 +2,7 @@ package pizzamvc;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,10 @@ public class Controller extends HttpServlet {
         // set default url
         String url = "/home.html";
 
+        // give servlet access to the path of a file on the server
+        ServletContext context = getServletContext();
+        String path = context.getRealPath("/WEB-INF/PizzaOrderList.txt");
+
         // get current action
         String action = request.getParameter("userAction");
         System.out.println("userAction=" + action);
@@ -49,7 +54,25 @@ public class Controller extends HttpServlet {
             // get parameters passed in from the request
             String email = request.getParameter("email");
             String size = request.getParameter("size");
-            String[] toppings = request.getParameterValues("toppings");
+            String[] toppingArray = request.getParameterValues("toppings");
+
+            // convert toppingArray to a comma separated string
+            String toppings = "none";
+            if (toppingArray != null && toppingArray.length > 0) {
+                // we have at least 1 topping; reset toppings to ""
+                toppings = "";
+                if (toppingArray.length == 1) {
+                    // single topping with no commas
+                    toppings = toppingArray[0];
+                } else if (toppingArray.length > 1) {
+                    // separate multiple toppings with commas
+                    for (int i = 0; i < toppingArray.length - 1; i++) {
+                        toppings += toppingArray[i] + ", ";
+                    }
+                    // the last topping does not have a comma after
+                    toppings += toppingArray[toppingArray.length - 1];
+                }
+            }
 
             // store data in an PizzaOrder object
             // the PizzaOrder class is part of the MVC model 
@@ -62,17 +85,18 @@ public class Controller extends HttpServlet {
                 url = "/orderError.jsp";
                 System.out.println("Controller:pizza order validation error");
             } else {
-                // have the DAO write to file or database here but is not implemented yet
+                // order looks ok; have the DAO add it to the order file
+                DAOPizzaOrder.addOrder(myOrder, path);
                 url = "/orderSuccess.jsp";
                 request.setAttribute("myOrder", myOrder);
                 System.out.println("Controller:placing order");
             }
 
         } else if (action.equalsIgnoreCase("report")) {
-            // eventually we will fetch the order records here and then pass them to showRecords.jsp
-            // not implemented yet...
+            // fetch the order records here and then pass them to showRecords.jsp
             System.out.println("controller:report");
             url = "/showRecords.jsp";
+            request.setAttribute("orderList", DAOPizzaOrder.getOrderList(path));
             System.out.println("controller:retrieving report");
         }
 
