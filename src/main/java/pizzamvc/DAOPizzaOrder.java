@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * This Data Access Object will append a pizza order to a text file.
+ * The Data Access Object for pizza orders. Here we use a text file to
+ * store the data. This approach should not be used if there is a chance that
+ * more than one user might write to the file at the same time. File corruption
+ * could occur. This approach would be fine if multiple users only read
+ * from a file or if only a single user writes to a file. Because of this a
+ * multiuser database approach is often preferred.
  *
  * @author John Phillips
  */
@@ -19,16 +24,9 @@ public class DAOPizzaOrder {
     public static void addOrder(PizzaOrder order, String filepath) throws IOException {
         File file = new File(filepath);
 
-        // handle situation where toppings might be null
-        String myToppings = order.getToppings();
-        StringBuilder sb = new StringBuilder("");
-        if (myToppings != null && myToppings.length() > 0) {
-            sb.append(myToppings);
-        }
-
         // the FileWriter true keyword indicates appending to end of file
         try (PrintWriter out = new PrintWriter(new FileWriter(file, true))) {
-            out.println(order.getEmail() + "|" + order.getSize() + "|" + sb.toString());
+            out.println(order.getEmail() + "|" + order.getSize() + "|" + order.getToppings());
         }
     }
 
