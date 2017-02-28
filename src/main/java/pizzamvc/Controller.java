@@ -55,6 +55,7 @@ public class Controller extends HttpServlet {
             String email = request.getParameter("email");
             String size = request.getParameter("size");
             String[] toppingArray = request.getParameterValues("toppings");
+            String crust = request.getParameter("crust");
 
             // convert toppingArray to a comma separated string
             String toppings = "none";
@@ -77,7 +78,7 @@ public class Controller extends HttpServlet {
             // store data in an PizzaOrder object
             // the PizzaOrder class is part of the MVC model 
             // as is the DAO (data access object)
-            PizzaOrder myOrder = new PizzaOrder(email, size, toppings);
+            PizzaOrder myOrder = new PizzaOrder(email, size, toppings, crust);
             System.out.println("Controller:order:pizza=" + myOrder);
 
             // validate the parameters

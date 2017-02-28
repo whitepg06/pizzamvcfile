@@ -41,7 +41,8 @@ public class DAOPizzaOrder {
             String email = lineArray[0];
             String size = lineArray[1];
             String toppings = lineArray[2];
-            PizzaOrder order = new PizzaOrder(email, size, toppings);
+            String crust = lineArray[3];
+            PizzaOrder order = new PizzaOrder(email, size, toppings, crust);
             list.add(order);
         }
 //        System.out.println("list=" + list);

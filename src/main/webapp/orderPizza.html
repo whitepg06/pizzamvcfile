@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>John's Online Pizza Store</title>
+        <title>Perry's Online Pizza Store</title>
         <link rel="stylesheet" href="mystyle.css">
     </head>
     <body>
-        <h1><a href="home.html">John's Online Pizza Store</a></h1>
+        <h1><a href="home.html">Perry's Online Pizza Store</a></h1>
         <h2>Web Order Form</h2>
         <form name='pizzaform' method='get' action='orderpizza'>
             <p>Customer Email: <input type='text' name='email' size='40' 
@@ -18,6 +18,9 @@
             <input type="checkbox" name="toppings" value="pepperoni">Pepperoni
             <input type="checkbox" name="toppings" value="mushroom">Mushroom
             <input type="checkbox" name="toppings" value="pineapple">Pineapple
+            <br>
+            <input type="checkbox" name="crust" value="hand-tossed">Hand-tossed
+            <input type="checkbox" name="crust" value="pan">Pan
             <br>
             <input type='hidden' name='userAction' value='order'>
             <input type="submit" name="order" value="Place Order">
